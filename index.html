@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Produktiewe</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+  <script type="text/javascript" src="/js/index.js"></script>
+  <script src="https://unpkg.com/dropbox/dist/Dropbox-sdk.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.js"></script>
+  <script src="https://unpkg.com/dropbox/dist/Dropbox-sdk.min.js"></script>
+  <script src="https://unpkg.com/dropbox/dist/DropboxTeam-sdk.min.js"></script>   
+  <script src="js/utils.js"></script>
+  <script src="js/datalist-polyfill.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="content-body">
+  <nav class="navbar navbar-default navbar-static-top navbar-inverse">
+    <div class="container">
+      <ul class="nav navbar-nav">
+        <li class="active">
+          <a href="/"><span class="glyphicon glyphicon-home"></span> Home</a>
+        </li>
+        <li>
+          <a href="https://devcenter.heroku.com/articles/how-heroku-works"><span class="glyphicon glyphicon-user"></span> Placeholder 0</a>
+        </li>
+        <li>
+          <a href="/"><span class="glyphicon glyphicon-user"></span>Produktiewe</a>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-info-sign"></span> Placeholder 00 <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="https://devcenter.heroku.com/articles/getting-started-with-ruby">Placeholder 1</a></li>
+              <li><a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs">Placeholder 2</a></li>
+              <li class="divider"></li>
+              <li><a href="https://devcenter.heroku.com/articles/getting-started-with-heroku-and-connect-without-local-dev">Placeholder 3</a></li>
+              <li><a href="https://devcenter.heroku.com/articles/getting-started-with-jruby">Placeholder 4</a></li>
+            </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="navbar-right">
+          <a href="https://devcenter.heroku.com"><span class="glyphicon glyphicon-book"></span> Placeholder 5</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="main">
+    <div id="pre-auth-section" style="display:none;">
+      <a href="" id="authlink" class="button">Dropbox Authenticate</a>
+    </div>
+
+    <div id="authed-section" style="display:none;">
+      <p>You have successfully authenticated. Below are the contents of your root directory. They were fetched using the SDK and access token.</p>
+      <ul id="files"></ul>
+    </div>
+  </div>
+  <div class = "template-board" >
+      <h2><b><span class="title-board">general board</span></b></h2>
+      <input class ="input-add-panel">
+      <button class = "btn-add-panel">add panel</button>
+  </div>
+  <div class = "template-panel">
+      <h3><b><span class="title-panel">Panel</span></b></h3>
+      <button class="btn-remove-panel">Remove Panel</button>
+      <input class="input-add-task">
+      <button class="btn-add-task">Add Task</button>
+      <ul class="list-tasks">
+      </ul>
+  </div>
+  <li class= "template-task" >
+      <button class="btn-move-task">Move</button>
+      <button class="btn-remove-task">Remove</button>
+      <input class="input-subtask-title"> 
+      <button class="btn-add-subtask">Add Subtask</button> 
+      <button class="btn-start-timer">Start Timer</button>
+      <button class="btn-open-timelog">Timelog</button>
+      <button class="btn-tag-manager">Tag</button>
+      <input class="input-task-checkbox-done" type="checkbox">
+      <input class="input-task-title" value="Practice Saxophone" disabled>
+      <span class="span-total-time">18m </span>
+      <span class="span-on-going-timer" style="display: none;">+19</span>
+      <ul class="list-sub-tasks">
+      </ul>
+  </li>
+  <li class= "template-sub-task">
+      <button class="btn-remove-subtask">Remove</button> 
+      <input class="input-subtask-checkbox-done" type="checkbox">
+      <input class="input-subtask-title" value="Subtask 1" disabled></li>
+  </li>
+  <div class="template-timer">
+      <h3><b>Timer</b></h3>
+      <h4>Task: <span class="timer-task-title">Homework</span></h4>
+      <h4>Session Time</h4>
+      <h4 class="timer-task-session-time">40:00</h4>
+      <h5>Total Task Time</h5>
+      <h5 class="timer-task-total-time">1:00:01</h5>
+      <button class="btn-stop-timer">Stop Timer</button>
+  </div>
+  <div class="template-timelog-panel">
+      <h3><b>Time log</b></h3>
+      <input type="date" class="date-picker"/>
+      <label> From:</label>
+      <input type="time" class="time-picker-from"/>
+      <label> To:</label>
+      <input type="time" class="time-picker-to"/>
+      <button class="btn-add-entry">+ Add Entry</button>
+      <input class="duration-display" value="6 hr" disabled style="display: none;">
+    <ul class="list-day">
+    </ul>
+  </div>
+  <li class= "template-timelog-session-day">
+      <h4><span class="date">Today</span> <span class="day-duration">3h 47m</span></h4>
+      <ul class="list-hour">  
+      </ul>
+  </li>
+  <li class="template-timelog-session-hour">
+      <h5><span class="range">12:00AM - 2:00AM (23 August 2018)</span> <span>,</span><span class="duration">8h 30m</span></h5>
+      <label style="display: none;"> From:</label>
+      <input type="time" class="time-picker-from" disabled style="display: none;"/>
+      <label style="display: none;"> To:</label>
+      <input type="time" class="time-picker-to" disabled style="display: none;"/>
+      <input class="duration-display" value="6 hr" disabled style="display: none;">
+      <button class="btn-edit-session" disabled style="display: none;">Edit</button>
+      <button class="btn-remove-session">Remove</button>
+  </li>
+  <div class="template-timelog-panel">
+    <h3><b>Tags</b></h3>
+    <input list="available-tags" class="input-tag"/>
+    <label> From:</label>
+    <input type="time" class="time-picker-from"/>
+    <label> To:</label>
+    <input type="time" class="time-picker-to"/>
+    <button class="btn-add-entry">+ Add Entry</button>
+    <input class="duration-display" value="6 hr" disabled style="display: none;">
+  
+    <ul class="list-tag">
+    </ul>
+  </div>
+  <div class="widgets-modal modal fade" id="global-modal" tabindex="-1" role="dialog" aria-labelledby="global-modal-labelby" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>
